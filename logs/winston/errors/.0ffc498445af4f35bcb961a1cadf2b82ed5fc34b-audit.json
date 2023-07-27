@@ -1,0 +1,60 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\.0ffc498445af4f35bcb961a1cadf2b82ed5fc34b-audit.json",
+    "files": [
+        {
+            "date": 1689077907416,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-11-07-18-error.log",
+            "hash": "b60475a51ed0f73cd58cefa03151dcba03395fdc2a7e6c8045d380bccb8f6a4f"
+        },
+        {
+            "date": 1689089287337,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-11-07-21-error.log",
+            "hash": "4df4bcf969625e31034eac9e02db8b032ea575c570713fb6605dff9af3b6eb19"
+        },
+        {
+            "date": 1689091857345,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-11-07-22-error.log",
+            "hash": "48f49a79b5ea8304cfe3dcb2c98e422fcf836f896f2fbb16b2452e61347ebf5d"
+        },
+        {
+            "date": 1689227167931,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-13-07-11-error.log",
+            "hash": "db265ad35b80a501c096f73f39ed0bc9be3b955bec6bc0dea315545c1c97fc72"
+        },
+        {
+            "date": 1689228221755,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-13-07-12-error.log",
+            "hash": "fb60da0a167e19351b97c97ca22cdb7a4eedac81a3487186ff5102e613ebc02f"
+        },
+        {
+            "date": 1689260967572,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-13-07-21-error.log",
+            "hash": "74d47a14ceed56628f4822385098df48372741dbde5b102a13d7226faa344dd4"
+        },
+        {
+            "date": 1689320672569,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-14-07-13-error.log",
+            "hash": "87a2391343bd20cd2f1737d31591eeb34897c9c49c0c850d8cc98a4052430154"
+        },
+        {
+            "date": 1689344018000,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-14-07-20-error.log",
+            "hash": "e002a26f9bec52c7811f7ac06e742dfaf35ade8e6f945fb31dbd4dfb7325d3bb"
+        },
+        {
+            "date": 1689437159223,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-15-07-22-error.log",
+            "hash": "ab888b6682bcb0143d83ca648a7c7e3349b5c1a79746505d55fa376804402e4f"
+        },
+        {
+            "date": 1690161255409,
+            "name": "H:\\projects\\inventory-mqanagement-node\\logs\\winston\\errors\\phu-2023-24-07-07-error.log",
+            "hash": "24ed74bec574eb87b2f34ae438bef750e311f87b03017f8b75095b20733250f5"
+        }
+    ],
+    "hashType": "sha256"
+}
