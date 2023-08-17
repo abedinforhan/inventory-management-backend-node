@@ -2,6 +2,8 @@ import express from 'express';
 import { BrandRoutes } from '../modules/brand/brand.route';
 import { CategoryRoutes } from '../modules/category/category.route';
 import { ProductRoutes } from '../modules/product/product.route';
+import { PurchaseHistoryRoutes } from '../modules/purchaseHistory/purchaseHistory.route';
+import { SupplierRoutes } from '../modules/supplier/supplier.route';
 
 const router = express.Router();
 
@@ -17,6 +19,14 @@ const moduleRoutes = [
   {
     path: '/products',
     route: ProductRoutes,
+  },
+  {
+    path: '/purchase-histories',
+    route: PurchaseHistoryRoutes,
+  },
+  {
+    path: '/suppliers',
+    route: SupplierRoutes,
   },
 ];
 

@@ -22,6 +22,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
 
 const getProducts = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, productFilterableFields);
+  console.log(filters);
   const paginationOptions = pick(req.query, paginationFields);
   const result = await ProductServices.getProducts(filters, paginationOptions);
 

@@ -1,0 +1,130 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\.35c37f0325ca24b33004639baa2fbb84d5f7890a-audit.json",
+    "files": [
+        {
+            "date": 1690827277775,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-31-07-11-success.log",
+            "hash": "a4cdff148f57a247a875cf81599b2c3ddc794658c4a71bb58ef97a14bf81e5cf"
+        },
+        {
+            "date": 1690832504866,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-31-07-12-success.log",
+            "hash": "b7cf5922e1e6df66b09218164e6d26fa6b4cd17e4f23994a2c7db827fd6c8aec"
+        },
+        {
+            "date": 1690871802815,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-31-07-23-success.log",
+            "hash": "5ae2310870c22d756ebf6ba5edf08c5bf416c36c14fe7d28f1a842690a853517"
+        },
+        {
+            "date": 1690952441820,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-02-08-11-success.log",
+            "hash": "206018fbb87680f56fdec15df339697fa5ddd888ef7d40a5ed6d0a20643a45bb"
+        },
+        {
+            "date": 1690963144066,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-02-08-13-success.log",
+            "hash": "7b7e69a6d2e44eeaead8056c971f79e97ac34c6629000eb544a8d1a1b406460f"
+        },
+        {
+            "date": 1691004994147,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-03-08-01-success.log",
+            "hash": "373c78cde6fefd2227d524c7fceafbb89ce3f89caa18ffd685b0ecacd5ad58ed"
+        },
+        {
+            "date": 1691045787030,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-03-08-12-success.log",
+            "hash": "ed19d9bce42d8d48f90459537e623f84caefb357820fa57056b8144adad86459"
+        },
+        {
+            "date": 1691082056038,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-03-08-23-success.log",
+            "hash": "d00a8c728b9693ac661b83a18ecd0adbfd227ea46cabccc72a7ff99a785b7723"
+        },
+        {
+            "date": 1691087852194,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-04-08-00-success.log",
+            "hash": "aa8228d2c83eecbbe527f9a8c6bbeb6d6a1478fee56c808e00af1c70610ff209"
+        },
+        {
+            "date": 1691125899694,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-04-08-11-success.log",
+            "hash": "55cc67d45bbe84cccb85319b9d2b00927c14d342d3ab62048b4160ee45652e9c"
+        },
+        {
+            "date": 1691175869856,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-01-success.log",
+            "hash": "ca97ee62e44ff88d9d95ea6df38dc4966ce620a690c39e786e50f0f022b587e6"
+        },
+        {
+            "date": 1691211218715,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-10-success.log",
+            "hash": "9d4aa6d9adc29d5d053069032eee927c196911737e1824f82a30684d257680a1"
+        },
+        {
+            "date": 1691213863051,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-11-success.log",
+            "hash": "e607b6909acc4bc10ce499bd4c9f39d9684bd6914922d574440e5383dfea3513"
+        },
+        {
+            "date": 1691215928118,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-12-success.log",
+            "hash": "f338883eb6a0eec60393c808d847b4571cddeff79fcb2315286903a28272f0f7"
+        },
+        {
+            "date": 1691219284600,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-13-success.log",
+            "hash": "f5d455c1694a7d9b08e9fbcabc20dafe6ea87842471f3ccedc2105b88829ff90"
+        },
+        {
+            "date": 1691238880053,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-18-success.log",
+            "hash": "c7e31caca59f247abf719cc9a5d01d150d6a93bb1652954751aaf390e107415a"
+        },
+        {
+            "date": 1691242602118,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-05-08-19-success.log",
+            "hash": "61491cd8eb6c005aebe99a92a66ebd5abb4494b7b8b96ba225d50598b6e42350"
+        },
+        {
+            "date": 1691260308795,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-06-08-00-success.log",
+            "hash": "f4d2b310e87fb1f85423e20277a2b353c840e4de89c20a9888f16aa4302b3c98"
+        },
+        {
+            "date": 1691305398303,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-06-08-13-success.log",
+            "hash": "9d23b06cca3f25e727908f968f65527a20687183aa5fb28e724b74f043b1b35c"
+        },
+        {
+            "date": 1691499736170,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-08-08-19-success.log",
+            "hash": "6751be91639fb0886dea7d32e387e2f62e8939f8bf811de5881016ef785a682e"
+        },
+        {
+            "date": 1691557149092,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-09-08-10-success.log",
+            "hash": "c89a921d15b0ac6929f9762ae3b3da253f1a1a1cbf89be01b8eff8b5c9aa3443"
+        },
+        {
+            "date": 1691848209430,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-12-08-19-success.log",
+            "hash": "88d96c90d2a1fcb95189a05b58f42f85e7d8ec59022f4f85218be720a9173b4e"
+        },
+        {
+            "date": 1691929345722,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-13-08-18-success.log",
+            "hash": "7304495117e9fa08021ada24e4c8d44666cfeb4015bf74372c6187075e770e84"
+        },
+        {
+            "date": 1691993029385,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\successes\\phu-2023-14-08-12-success.log",
+            "hash": "a9087650825e0ed2ad1460b10e0d92d5e417327017541c72a64ed43a80646892"
+        }
+    ],
+    "hashType": "sha256"
+}
