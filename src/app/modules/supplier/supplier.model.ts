@@ -19,7 +19,6 @@ export const SupplierSchema = new Schema<ISupplier, SupplierModel>(
     },
     contactNo: {
       type: String,
-      unique: true,
       required: true,
     },
     emergencyContactNo: {

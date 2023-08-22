@@ -21,6 +21,7 @@ const getAllSuppliers = async (
 ): Promise<IGenericResponse<ISupplier[]>> => {
   // Extract searchTerm to implement search query
   const { searchTerm, ...filtersData } = filters;
+
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
@@ -36,6 +37,7 @@ const getAllSuppliers = async (
       })),
     });
   }
+
   // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
@@ -79,7 +81,7 @@ const updateSupplier = async (
   id: string,
   payload: Partial<ISupplier>
 ): Promise<ISupplier | null> => {
-  const isExist = await Supplier.findOne({ id });
+  const isExist = await Supplier.findById(id);
 
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Supplier not found !');

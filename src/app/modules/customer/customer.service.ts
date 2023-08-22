@@ -2,30 +2,30 @@ import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { brandSearchableFields } from './brand.constant';
-import { IBandFilters, IBrand } from './brand.interface';
-import { Brand } from './brand.model';
 
-const createBrand = async (payload: IBrand): Promise<IBrand | null> => {
-  const result = await Brand.create(payload);
-  return result;
+import { customerSearchableFields } from './customer.constant';
+import { ICustomer, ICustomerFilters } from './customer.interface';
+import { Customer } from './customer.model';
+
+const createCustomer = async (
+  payload: ICustomer
+): Promise<ICustomer | null> => {
+  return await Customer.create(payload);
 };
 
-const getBrands = async (
-  filters: IBandFilters,
+const getCustomers = async (
+  filters: ICustomerFilters,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IBrand[]>> => {
-  // Extract searchTerm to implement search query
+): Promise<IGenericResponse<ICustomer[]>> => {
   const { searchTerm, ...filtersData } = filters;
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
   const andConditions = [];
 
-  // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
-      $or: brandSearchableFields.map(field => ({
+      $or: customerSearchableFields.map(field => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',
@@ -34,7 +34,6 @@ const getBrands = async (
     });
   }
 
-  // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => ({
@@ -43,7 +42,6 @@ const getBrands = async (
     });
   }
 
-  // Dynamic  Sort needs  field to  do sorting
   const sortConditions: { [key: string]: SortOrder } = {};
   if (sortBy && sortOrder) {
     sortConditions[sortBy] = sortOrder;
@@ -51,12 +49,11 @@ const getBrands = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Brand.find(whereConditions)
+  const result = await Customer.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
-
-  const total = await Brand.countDocuments(whereConditions);
+  const total = await Customer.countDocuments(whereConditions);
 
   return {
     meta: {
@@ -68,24 +65,27 @@ const getBrands = async (
   };
 };
 
-const updateBrand = async (
+const getSingleCustomer = async (id: string): Promise<ICustomer | null> => {
+  return await Customer.findOne({ _id: id });
+};
+
+const updateCustomer = async (
   id: string,
-  payload: Partial<IBrand>
-): Promise<IBrand | null> => {
-  const result = await Brand.findOneAndUpdate({ _id: id }, payload, {
+  payload: Partial<ICustomer>
+): Promise<ICustomer | null> => {
+  return await Customer.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
-  return result;
 };
 
-const deleteBrand = async (id: string): Promise<IBrand | null> => {
-  const result = await Brand.findByIdAndDelete(id);
-  return result;
+const deleteCustomer = async (id: string): Promise<ICustomer | null> => {
+  return await Customer.findByIdAndDelete(id);
 };
 
-export const BrandServices = {
-  createBrand,
-  getBrands,
-  updateBrand,
-  deleteBrand,
+export const CustomerServices = {
+  createCustomer,
+  getCustomers,
+  getSingleCustomer,
+  updateCustomer,
+  deleteCustomer,
 };

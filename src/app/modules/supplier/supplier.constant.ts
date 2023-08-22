@@ -2,7 +2,6 @@ export const gender = ['male', 'female'];
 export const bloodGroup = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
 export const supplierSearchableFields = [
-  'id',
   'email',
   'contactNo',
   'name.fisrtName',
@@ -10,10 +9,4 @@ export const supplierSearchableFields = [
   'name.lastName',
 ];
 
-export const supplierFilterableFields = [
-  'searchTerm',
-  'bloodGroup',
-  'email',
-  'contactNo',
-  'emergencyContactNo',
-];
+export const supplierFilterableFields = ['searchTerm', 'brand'];

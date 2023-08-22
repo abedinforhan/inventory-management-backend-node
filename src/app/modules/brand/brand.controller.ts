@@ -21,7 +21,6 @@ const createBrand = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getBrands = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.query);
   const filters = pick(req.query, brandFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
   const result = await BrandServices.getBrands(filters, paginationOptions);

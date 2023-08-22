@@ -4,7 +4,8 @@ import { CategoryRoutes } from '../modules/category/category.route';
 import { ProductRoutes } from '../modules/product/product.route';
 import { PurchaseHistoryRoutes } from '../modules/purchaseHistory/purchaseHistory.route';
 import { SupplierRoutes } from '../modules/supplier/supplier.route';
-
+import { UnitRoutes } from '../modules/unit/unit.route';
+import { CustomerRoutes } from '../modules/customer/customer.route';
 const router = express.Router();
 
 const moduleRoutes = [
@@ -28,6 +29,14 @@ const moduleRoutes = [
     path: '/suppliers',
     route: SupplierRoutes,
   },
+  {
+    path: '/units',
+    route: UnitRoutes,
+  },
+  {
+    path: '/customers',
+    route: CustomerRoutes,
+  }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

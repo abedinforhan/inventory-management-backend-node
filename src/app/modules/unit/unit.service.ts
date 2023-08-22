@@ -2,19 +2,19 @@ import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { brandSearchableFields } from './brand.constant';
-import { IBandFilters, IBrand } from './brand.interface';
-import { Brand } from './brand.model';
+import { unitSearchableFields } from './unit.constant';
+import { IUnit, IUnitFilters } from './unit.interface';
+import { Unit } from './unit.model';
 
-const createBrand = async (payload: IBrand): Promise<IBrand | null> => {
-  const result = await Brand.create(payload);
+const createUnit = async (payload: IUnit): Promise<IUnit | null> => {
+  const result = await Unit.create(payload);
   return result;
 };
 
-const getBrands = async (
-  filters: IBandFilters,
+const getUnits = async (
+  filters: IUnitFilters,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IBrand[]>> => {
+): Promise<IGenericResponse<IUnit[]>> => {
   // Extract searchTerm to implement search query
   const { searchTerm, ...filtersData } = filters;
   const { page, limit, skip, sortBy, sortOrder } =
@@ -25,7 +25,7 @@ const getBrands = async (
   // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
-      $or: brandSearchableFields.map(field => ({
+      $or: unitSearchableFields.map(field => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',
@@ -33,7 +33,6 @@ const getBrands = async (
       })),
     });
   }
-
   // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
@@ -51,12 +50,12 @@ const getBrands = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Brand.find(whereConditions)
+  const result = await Unit.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  const total = await Brand.countDocuments(whereConditions);
+  const total = await Unit.countDocuments(whereConditions);
 
   return {
     meta: {
@@ -68,24 +67,24 @@ const getBrands = async (
   };
 };
 
-const updateBrand = async (
+const updateUnit = async (
   id: string,
-  payload: Partial<IBrand>
-): Promise<IBrand | null> => {
-  const result = await Brand.findOneAndUpdate({ _id: id }, payload, {
+  payload: Partial<IUnit>
+): Promise<IUnit | null> => {
+  const result = await Unit.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
   return result;
 };
 
-const deleteBrand = async (id: string): Promise<IBrand | null> => {
-  const result = await Brand.findByIdAndDelete(id);
+const deleteUnit = async (id: string): Promise<IUnit | null> => {
+  const result = await Unit.findByIdAndDelete(id);
   return result;
 };
 
-export const BrandServices = {
-  createBrand,
-  getBrands,
-  updateBrand,
-  deleteBrand,
+export const UnitServices = {
+  createUnit,
+  getUnits,
+  updateUnit,
+  deleteUnit,
 };
