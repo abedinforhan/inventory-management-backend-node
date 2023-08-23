@@ -8,18 +8,45 @@ const productModel = new Schema<IProduct, ProductModel>(
       required: true,
       unique: true,
     },
-    description: {
+    sku: {
       type: String,
-    },
-    brand: {
-      type: Schema.Types.ObjectId,
-      ref: 'Brand',
       required: true,
+      unique: true,
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
       required: true,
+    },
+    brand: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Brand',
+    },
+    unit: {
+      type: String,
+      required: true,
+      ref: 'Unit',
+    },
+    quantity: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+    },
+    maxPrice: {
+      type: Number,
+      default: 0,
+    },
+    unitPrice: {
+      type: Number,
+      default: 0,
+    },
+    images: {
+      type: [String],
+      required: true,
+      default: '',
     },
   },
   {

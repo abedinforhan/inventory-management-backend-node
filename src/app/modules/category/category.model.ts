@@ -8,6 +8,9 @@ const CategorySchema = new Schema<ICategory, CategoryModel>(
       required: true,
       unique: true,
     },
+    description: {
+      type: String,
+    },
   },
   {
     timestamps: true,

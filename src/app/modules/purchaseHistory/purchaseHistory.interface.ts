@@ -1,7 +1,7 @@
 import { Model, Types } from 'mongoose';
 
 export type IPurchaseHistory = {
-  name: string;
+  purchaseId: Types.ObjectId;
   supplierId: Types.ObjectId;
   vatTax: number;
   shippingCost: number;

@@ -6,11 +6,6 @@
     "auditLog": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\.b469eba81d2fbbd1864cea21bef3cbfa53cde6c9-audit.json",
     "files": [
         {
-            "date": 1691557149095,
-            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-09-08-10-error.log",
-            "hash": "4f08409f22eb671e3812a36f648d9c930d53c1b1ab5df2e443f09d368f1cea2a"
-        },
-        {
             "date": 1691848209438,
             "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-12-08-19-error.log",
             "hash": "aa662c03b232ab1d25b403196d76c5eca83dc9acfff4140a2c831c500541c7f3"
@@ -74,6 +69,31 @@
             "date": 1692734655697,
             "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-02-error.log",
             "hash": "280230a09a2bb4e605a7ed356f9207d8eac189da56c94b248f7ace3cac9b773c"
+        },
+        {
+            "date": 1692783195764,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-15-error.log",
+            "hash": "d3090c8ad0d957f84eebde55a931b108a4f3fa6275ed1ba9311f90ea0cf3b86e"
+        },
+        {
+            "date": 1692785159775,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-16-error.log",
+            "hash": "dbe8aa0833c2646e3a00afafcb6b553164973fdbfc096d7ac9b537efdefcf0b8"
+        },
+        {
+            "date": 1692791733893,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-17-error.log",
+            "hash": "0b2e70bd782a8f2414d9ac3af2ae4f055e6ac2921bfd04af5c49ca048d003b6f"
+        },
+        {
+            "date": 1692792740412,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-18-error.log",
+            "hash": "f15765c13d75c21b8c2f8b281802eee03bbec5a6f98dc45e7471051df57ec5d1"
+        },
+        {
+            "date": 1692797986833,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-23-08-19-error.log",
+            "hash": "b7fe78e448d1f1732b613db5de2f56aa2b8de478eed56f97d6b92626e4ec7894"
         }
     ],
     "hashType": "sha256"

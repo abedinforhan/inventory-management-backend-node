@@ -9,9 +9,10 @@ const PurchaseHistorySchema = new Schema<
   PurchaseHistoryModel
 >(
   {
-    name: {
-      type: String,
+    purchaseId: {
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Purchase',
     },
     supplierId: {
       type: Schema.Types.ObjectId,
