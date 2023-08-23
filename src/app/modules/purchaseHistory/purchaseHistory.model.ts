@@ -12,26 +12,39 @@ const PurchaseHistorySchema = new Schema<
     purchaseId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'Purchase',
+      ref: 'PurchaseSummary',
     },
-    supplierId: {
+    // supplierId: {
+    //   type: Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: 'Supplier',
+    // },
+    productId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'Supplier',
+      ref: 'Product',
     },
-    vatTax: {
+    // vatTax: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // shippingCost: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // otherCost: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // grandTotal: {
+    //   type: Number,
+    //   required: true,
+    // },
+    quantity: {
       type: Number,
       required: true,
     },
-    shippingCost: {
-      type: Number,
-      required: true,
-    },
-    otherCost: {
-      type: Number,
-      required: true,
-    },
-    grandTotal: {
+    unitPrice: {
       type: Number,
       required: true,
     },
