@@ -154,6 +154,11 @@
             "date": 1693131534323,
             "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-27-08-16-error.log",
             "hash": "56810d9c39568e2f9f3af8d66decc86000dafd338dba40b3b23e916e2f0f3ae4"
+        },
+        {
+            "date": 1693136852557,
+            "name": "E:\\personal\\inventory-management\\inventory-management-backend-node\\logs\\winston\\errors\\phu-2023-27-08-17-error.log",
+            "hash": "2bb27a4e00d429155a83d3781f7634c96545e70dae0287b402312bf34d80acdf"
         }
     ],
     "hashType": "sha256"
