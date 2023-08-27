@@ -16,7 +16,6 @@ const PurchaseHistorySchema = new Schema<
     },
     purchaseId: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'Purchase',
     },
     supplierId: {

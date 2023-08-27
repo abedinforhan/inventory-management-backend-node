@@ -21,6 +21,7 @@ const createPurchaseHistory = catchAsync(
       message: 'Purchase History is created successfully',
       data: result,
     });
+    res.send(result);
   }
 );
 
