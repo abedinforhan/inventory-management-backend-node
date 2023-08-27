@@ -1,4 +1,4 @@
-import mongoose, { SortOrder } from 'mongoose';
+import mongoose, { SortOrder, Types } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -11,47 +11,73 @@ import {
 import { PurchaseHistory } from './purchaseHistory.model';
 
 const createPurchaseHistory = async (
-  payload: IPurchaseHistory
-): Promise<IPurchaseHistory | null> => {
+  payload: {
+    vatTax: number,
+    shippingCost: number,
+    otherCost: number,
+    grandTotal: number,
+    supplierId: Types.ObjectId,
+    purchasedProducts: Array<any>  // Define a more specific type for products if you have one
+  }
+): Promise<Array<IPurchaseHistory> | null> => {
+  const { vatTax, shippingCost, otherCost, grandTotal, supplierId, purchasedProducts } = payload;
+
   const session = await mongoose.startSession();
   session.startTransaction();
 
+  const createdHistories: Array<IPurchaseHistory> = [];
+
   try {
-    // Create purchase history
-    const [purchaseHistory] = await PurchaseHistory.create(payload, {
-      session,
-    });
-    // Find and update the associated product
-    const product = await Product.findById(
-      (purchaseHistory as IPurchaseHistory).productId
-    ).session(session);
+    for (const product of purchasedProducts) {
+        const purchaseHistoryPayload = {
+            productId: product.productId,
+            supplierId,
+            vatTax,
+            shippingCost,
+            otherCost,
+            grandTotal,
+            // purchaseId needs to be set if you need it
+        };
 
-    if (!product) {
-      throw new Error('Product not found');
+        // Create purchase history for each product
+        const purchaseHistory = new PurchaseHistory(purchaseHistoryPayload);
+        await purchaseHistory.save({ session });
+        
+        // Validate if purchaseHistory is correctly populated
+        if (!purchaseHistory || !purchaseHistory.productId) {
+            throw new Error('PurchaseHistory creation failed.');
+        }
+
+        // Find and update the associated product
+        const productDoc = await Product.findById(purchaseHistory.productId).session(session);
+        
+        if (!productDoc) {
+            throw new Error('Product not found');
+        }
+
+        // You can place calculations related to the product here
+
+        // Update product fields, if necessary
+        productDoc.perUnitSellingPrice = product.perUnitSellingPrice;  // Or any calculated value
+        productDoc.perUnitMaxPrice = product.perUnitMaxPrice;
+        productDoc.buyingQuantity = product.buyingQuantity;
+
+        await productDoc.save();
+
+        createdHistories.push(purchaseHistory);
     }
-
-    // Perform calculations based on purchase history
-    const newSellingPrice = 0;
-    const newMaxPrice = 0;
-    const newBuyingQuantity = 0;
-
-    // Update product fields
-    product.perUnitSellingPrice = newSellingPrice;
-    product.perUnitMaxPrice = newMaxPrice;
-    product.buyingQuantity = newBuyingQuantity;
-
-    await product.save();
 
     await session.commitTransaction();
     session.endSession();
 
-    return purchaseHistory;
+    return createdHistories;
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
     throw error;
   }
 };
+
 
 
 const getPurchaseHistories = async (
