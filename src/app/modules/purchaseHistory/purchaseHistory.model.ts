@@ -9,6 +9,11 @@ const PurchaseHistorySchema = new Schema<
   PurchaseHistoryModel
 >(
   {
+    productId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Product', // Reference the Product model
+    },
     purchaseId: {
       type: Schema.Types.ObjectId,
       required: true,
