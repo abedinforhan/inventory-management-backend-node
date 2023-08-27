@@ -21,6 +21,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getProducts = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.query, 'test');
   const filters = pick(req.query, productFilterableFields);
   console.log(filters);
   const paginationOptions = pick(req.query, paginationFields);

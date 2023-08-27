@@ -24,22 +24,22 @@ const productModel = new Schema<IProduct, ProductModel>(
       ref: 'Brand',
     },
     unit: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: 'Unit',
-    },
-    quantity: {
-      type: Number,
-      default: 0,
     },
     description: {
       type: String,
     },
-    maxPrice: {
+    perUnitSellingPrice: {
       type: Number,
       default: 0,
     },
-    unitPrice: {
+    perUnitMaxPrice: {
+      type: Number,
+      default: 0,
+    },
+    buyingQuantity: {
       type: Number,
       default: 0,
     },

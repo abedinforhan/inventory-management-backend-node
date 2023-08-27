@@ -95,7 +95,7 @@ const updateSupplier = async (
 
 const deleteSupplier = async (id: string): Promise<ISupplier | null> => {
   // check if the student is exist
-  const isExist = await Supplier.findOne({ id });
+  const isExist = await Supplier.findById({ id });
 
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Supplier  not found !');

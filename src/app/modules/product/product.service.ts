@@ -55,13 +55,17 @@ const getProducts = async (
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)
-    .populate('brand category');
+    .populate('brand category unit');
   const total = await Product.countDocuments(whereConditions);
+
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
 
   return {
     meta: {
       page,
       limit,
+      totalPage,
       total,
     },
     data: result,
@@ -69,9 +73,7 @@ const getProducts = async (
 };
 
 const getSingleProducts = async (id: string): Promise<IProduct | null> => {
-  const result = await Product.findOne({ id })
-    .populate('category')
-    .populate('brand');
+  const result = await Product.findById(id).populate('category brand unit');
 
   return result;
 };

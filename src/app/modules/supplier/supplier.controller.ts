@@ -46,8 +46,7 @@ const getAllSuppliers = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Suppliers fetched successfully !',
-    meta: result.meta,
-    data: result.data,
+    data: result,
   });
 });
 

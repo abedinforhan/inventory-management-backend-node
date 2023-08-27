@@ -9,10 +9,10 @@ export type IProduct = {
   category: Types.ObjectId | ICategory;
   brand: Types.ObjectId | IBrand;
   unit: Types.ObjectId | IUnit;
-  quantity: number;
   description?: string;
-  maxPrice: number;
-  unitPrice: number;
+  perUnitSellingPrice: number;
+  perUnitMaxPrice: number;
+  buyingQuantity: number;
   images?: [string];
 };
 
