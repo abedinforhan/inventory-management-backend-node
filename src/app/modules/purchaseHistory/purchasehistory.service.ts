@@ -1,7 +1,8 @@
-import { SortOrder } from 'mongoose';
+import mongoose, { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import { Product } from '../product/product.model';
 import { purchaseHistorySearchableFields } from './purchaseHistory.constant';
 import {
   IPurchaseHistory,
@@ -12,9 +13,46 @@ import { PurchaseHistory } from './purchaseHistory.model';
 const createPurchaseHistory = async (
   payload: IPurchaseHistory
 ): Promise<IPurchaseHistory | null> => {
-  const result = await PurchaseHistory.create(payload);
-  return result;
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    // Create purchase history
+    const [purchaseHistory] = await PurchaseHistory.create(payload, {
+      session,
+    });
+    // Find and update the associated product
+    const product = await Product.findById(
+      (purchaseHistory as IPurchaseHistory).productId
+    ).session(session);
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    // Perform calculations based on purchase history
+    const newSellingPrice = 0;
+    const newMaxPrice = 0;
+    const newBuyingQuantity = 0;
+
+    // Update product fields
+    product.perUnitSellingPrice = newSellingPrice;
+    product.perUnitMaxPrice = newMaxPrice;
+    product.buyingQuantity = newBuyingQuantity;
+
+    await product.save();
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return purchaseHistory;
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
+
 
 const getPurchaseHistories = async (
   filters: IPurchaseHistoryFilters,
@@ -61,12 +99,14 @@ const getPurchaseHistories = async (
     .limit(limit);
 
   const total = await PurchaseHistory.countDocuments(whereConditions);
+  const totalPage = Math.ceil(total / limit);
 
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };

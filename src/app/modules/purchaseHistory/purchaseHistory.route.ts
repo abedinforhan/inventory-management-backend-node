@@ -4,7 +4,7 @@ import { PurchaseHistoryControllers } from './purchaseHistory.controller';
 const router = express.Router();
 
 router.post(
-  '/create-product',
+  '/create-purchase',
   PurchaseHistoryControllers.createPurchaseHistory
 );
 
