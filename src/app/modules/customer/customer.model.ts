@@ -1,35 +1,59 @@
-// name,address?,email?,date,phone number, purchase history[],
 import { Schema, model } from 'mongoose';
 import { CustomerModel, ICustomer } from './customer.interface';
-const customerSchema = new Schema<ICustomer, CustomerModel>({
-  name: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: false,
-  },
-  email: {
-    type: String,
-    required: false,
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
-  purchaseHistory: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'PurchaseHistory',
+const customerSchema = new Schema<ICustomer, CustomerModel>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+      enum: ['male', 'female'],
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    contactNo: {
+      type: String,
       required: false,
     },
-  ],
-});
+    streetAddress: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+      enum: [
+        'Dhaka',
+        'Chattogram',
+        'Khulna',
+        'Rajshahi',
+        'Barisal',
+        'Sylhet',
+        'Rangpur',
+        'Comilla',
+        'Mymensingh',
+      ],
+    },
+    zipCode: {
+      type: Number,
+      required: true,
+    },
+    profileImage: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
 export const Customer = model<ICustomer, CustomerModel>(
   'Customer',

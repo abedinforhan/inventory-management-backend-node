@@ -56,6 +56,8 @@ const getProducts = async (
     .skip(skip)
     .limit(limit)
     .populate('brand category unit');
+
+  // total count
   const total = await Product.countDocuments(whereConditions);
 
   // calculate the page

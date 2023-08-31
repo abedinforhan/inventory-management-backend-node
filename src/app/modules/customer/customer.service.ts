@@ -10,7 +10,8 @@ import { Customer } from './customer.model';
 const createCustomer = async (
   payload: ICustomer
 ): Promise<ICustomer | null> => {
-  return await Customer.create(payload);
+  const result = await Customer.create(payload);
+  return result;
 };
 
 const getCustomers = async (
@@ -55,25 +56,29 @@ const getCustomers = async (
     .limit(limit);
   const total = await Customer.countDocuments(whereConditions);
 
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
+
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };
 };
 
 const getSingleCustomer = async (id: string): Promise<ICustomer | null> => {
-  return await Customer.findOne({ _id: id });
+  return await Customer.findById(id);
 };
 
 const updateCustomer = async (
   id: string,
   payload: Partial<ICustomer>
 ): Promise<ICustomer | null> => {
-  return await Customer.findOneAndUpdate({ _id: id }, payload, {
+  return await Customer.findByIdAndUpdate(id, payload, {
     new: true,
   });
 };

@@ -1,11 +1,11 @@
 import express from 'express';
 import { BrandRoutes } from '../modules/brand/brand.route';
 import { CategoryRoutes } from '../modules/category/category.route';
+import { CustomerRoutes } from '../modules/customer/customer.route';
 import { ProductRoutes } from '../modules/product/product.route';
-import { PurchaseHistoryRoutes } from '../modules/purchaseHistory/purchaseHistory.route';
+import { PurchaseRoutes } from '../modules/purchase/purchase.route';
 import { SupplierRoutes } from '../modules/supplier/supplier.route';
 import { UnitRoutes } from '../modules/unit/unit.route';
-import { CustomerRoutes } from '../modules/customer/customer.route';
 const router = express.Router();
 
 const moduleRoutes = [
@@ -22,8 +22,8 @@ const moduleRoutes = [
     route: ProductRoutes,
   },
   {
-    path: '/purchase-histories',
-    route: PurchaseHistoryRoutes,
+    path: '/purchases',
+    route: PurchaseRoutes,
   },
   {
     path: '/suppliers',
@@ -36,7 +36,7 @@ const moduleRoutes = [
   {
     path: '/customers',
     route: CustomerRoutes,
-  }
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

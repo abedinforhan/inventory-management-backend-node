@@ -10,6 +10,7 @@ import { CustomerServices } from './customer.service';
 
 const createCustomer = catchAsync(async (req: Request, res: Response) => {
   const customerData = req.body;
+
   const result = await CustomerServices.createCustomer(customerData);
 
   sendResponse<ICustomer>(res, {
@@ -23,6 +24,7 @@ const createCustomer = catchAsync(async (req: Request, res: Response) => {
 const getCustomers = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, customerFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
+
   const result = await CustomerServices.getCustomers(
     filters,
     paginationOptions

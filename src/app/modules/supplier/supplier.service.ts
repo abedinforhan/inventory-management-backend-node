@@ -60,13 +60,19 @@ const getAllSuppliers = async (
     .skip(skip)
     .limit(limit)
     .populate('brand');
+
+  // total count
   const total = await Supplier.countDocuments(whereConditions);
+
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
 
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };
@@ -101,7 +107,6 @@ const deleteSupplier = async (id: string): Promise<ISupplier | null> => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Supplier  not found !');
   }
   const result = await Supplier.findByIdAndDelete(id);
-  console.log(result);
   return result;
 };
 
