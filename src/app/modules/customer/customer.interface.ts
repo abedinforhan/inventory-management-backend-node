@@ -4,8 +4,9 @@ export type ICustomer = {
   name: string;
   email: string;
   gender: string;
-  contactNo: string;
-  streetAddress: string;
+  contactNo1: string;
+  contactNo2?: string;
+  shippingAddress?: string;
   city: string;
   zipCode: number;
   profileImage?: string;

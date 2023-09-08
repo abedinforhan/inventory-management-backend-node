@@ -16,13 +16,16 @@ const customerSchema = new Schema<ICustomer, CustomerModel>(
       required: true,
       unique: true,
     },
-    contactNo: {
+    contactNo1: {
+      type: String,
+      required: true,
+    },
+    contactNo2: {
       type: String,
       required: false,
     },
-    streetAddress: {
+    shippingAddress: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
