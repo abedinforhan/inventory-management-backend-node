@@ -9,6 +9,7 @@ import {
   ILoginUser,
   ILoginUserResponse,
   IRefreshTokenResponse,
+  ITokenResponse,
 } from './auth.interface';
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
@@ -51,7 +52,6 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   //verify token
-  // invalid token - synchronous
   let verifiedToken = null;
   try {
     verifiedToken = jwtHelpers.verifyToken(
@@ -64,15 +64,43 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
 
   const { userId } = verifiedToken;
 
-  // tumi delete hye gso  kintu tumar refresh token ase
-  // checking deleted user's refresh token
+  const isUserExist = await User.isUserExist(userId);
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
+
+  //generate new token
+  const newAccessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist.id,
+      role: isUserExist.role,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  return {
+    accessToken: newAccessToken,
+  };
+};
+
+const verifyToken = async (token: string): Promise<ITokenResponse> => {
+  let verifiedToken = null;
+  console.log(token);
+  try {
+    verifiedToken = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+  } catch (err) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid access Token');
+  }
+
+  const { userId } = verifiedToken;
 
   const isUserExist = await User.isUserExist(userId);
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
-  //generate new token
 
+  //generate new token
   const newAccessToken = jwtHelpers.createToken(
     {
       id: isUserExist.id,
@@ -93,9 +121,6 @@ const changePassword = async (
 ): Promise<void> => {
   const { oldPassword, newPassword } = payload;
 
-  // // checking is user exist
-  // const isUserExist = await User.isUserExist(user?.userId);
-
   //alternative way
   const isUserExist = await User.findOne({ id: user?.userId }).select(
     '+password'
@@ -113,21 +138,6 @@ const changePassword = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Old Password is incorrect');
   }
 
-  // // hash password before saving
-  // const newHashedPassword = await bcrypt.hash(
-  //   newPassword,
-  //   Number(config.bycrypt_salt_rounds)
-  // );
-
-  // const query = { id: user?.userId };
-  // const updatedData = {
-  //   password: newHashedPassword,  //
-  //   needsPasswordChange: false,
-  //   passwordChangedAt: new Date(), //
-  // };
-
-  // await User.findOneAndUpdate(query, updatedData);
-  // data update
   isUserExist.password = newPassword;
   isUserExist.needsPasswordChange = false;
 
@@ -139,4 +149,5 @@ export const AuthService = {
   loginUser,
   refreshToken,
   changePassword,
+  verifyToken,
 };

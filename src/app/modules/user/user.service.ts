@@ -32,6 +32,8 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
   user.id = id;
   user.password = password as string;
 
+  console.log(user);
+
   const newUser = await User.create(user);
 
   if (!newUser) {

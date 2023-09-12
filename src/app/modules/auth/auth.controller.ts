@@ -47,6 +47,17 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const verifyToken = catchAsync(async (req: Request, res: Response) => {
+  const { accessToken } = req.body;
+  await AuthService.verifyToken(accessToken);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Token verified successfully!',
+  });
+});
+
 const changePassword = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const { ...passwordData } = req.body;
@@ -64,4 +75,5 @@ export const AuthController = {
   loginUser,
   refreshToken,
   changePassword,
+  verifyToken,
 };
