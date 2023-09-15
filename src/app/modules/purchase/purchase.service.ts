@@ -3,6 +3,7 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { Product } from '../product/product.model';
+import { Summary } from '../summary/summary.model';
 import { IPurchase, IPurchaseFilters } from './purchase.interface';
 import { Purchase } from './purchase.model';
 import { purchaseSearchableFields } from './purchaseconstant';
@@ -13,7 +14,7 @@ const createPurchase = async (
   const session = await mongoose.startSession();
   session.startTransaction();
 
-  const { products } = payload;
+  const { products, grandTotal } = payload;
 
   try {
     const newPurchase = await Purchase.create([payload], {
@@ -34,6 +35,26 @@ const createPurchase = async (
       existingProduct.perUnitSellingPrice = perUnitSellingPrice;
 
       await existingProduct.save();
+    }
+    const totalPurchase = grandTotal;
+    // Calculate totalPurchasedProduct (sum of all product quantities)
+    const totalPurchasedProduct = products.reduce(
+      (total, pd) => total + pd.buyingQuantity,
+      0
+    );
+    // Update or create the summary document
+    const summary = await Summary.findOne().session(session);
+    if (summary) {
+      // Update the existing summary
+      summary.totalPurchase += totalPurchase;
+      summary.totalPurchasedProduct += totalPurchasedProduct;
+    } else {
+      // Create a new summary if it doesn't exist
+      const newSummary = new Summary({
+        totalPurchase,
+        totalPurchasedProduct,
+      });
+      await newSummary.save();
     }
 
     await session.commitTransaction();

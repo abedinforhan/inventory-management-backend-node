@@ -6,6 +6,7 @@ import { CustomerRoutes } from '../modules/customer/customer.route';
 import { ProductRoutes } from '../modules/product/product.route';
 import { PurchaseRoutes } from '../modules/purchase/purchase.route';
 import { SellRoutes } from '../modules/sell/sell.route';
+import { SummaryRoutes } from '../modules/summary/summary.routes';
 import { SupplierRoutes } from '../modules/supplier/supplier.route';
 import { UnitRoutes } from '../modules/unit/unit.route';
 import { UserRoutes } from '../modules/user/user.route';
@@ -52,6 +53,7 @@ const moduleRoutes = [
     path: '/auth',
     route: AuthRoutes,
   },
+  { path: '/summary', route: SummaryRoutes },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));
