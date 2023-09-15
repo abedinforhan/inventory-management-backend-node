@@ -2,12 +2,14 @@ import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import { SummaryService } from '../summary/summary.services';
 import { saleSearchableFields } from './sell.constant';
 import { ISell, ISellFilters } from './sell.interface';
 import { Sell } from './sell.model';
 
 const createSell = async (payload: ISell): Promise<ISell | null> => {
   const result = await Sell.create(payload);
+  await SummaryService.calculateSummary();
   return result;
 };
 const getSales = async (
