@@ -3,13 +3,13 @@ import httpStatus from 'http-status';
 import sendResponse from '../../../shared/sendResponse';
 import { SummaryService } from './summary.services';
 
-const calculateSummary = async (req: Request, res: Response) => {
+const getSummary = async (req: Request, res: Response) => {
   try {
-    const summary = await SummaryService.calculateSummary();
+    const summary = await SummaryService.getSummary();
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Summary calculated successfully',
+      message: 'Summary fetched successfully',
       data: summary,
     });
   } catch (error) {
@@ -23,5 +23,5 @@ const calculateSummary = async (req: Request, res: Response) => {
 };
 
 export const SummaryController = {
-  calculateSummary,
+  getSummary,
 };
