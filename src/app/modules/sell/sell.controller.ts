@@ -4,55 +4,52 @@ import { paginationFields } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { purchasFilterableFields } from './sell.constant';
-import { IPurchase } from './sell.interface';
-import { PurchaseServices } from './sell.service';
+import { saleFilterableFields } from './sell.constant';
+import { ISell } from './sell.interface';
+import { SellServices } from './sell.service';
 
-const createPurchase = catchAsync(async (req: Request, res: Response) => {
-  const { ...purchaseData } = req.body;
-  const result = await PurchaseServices.createPurchase(purchaseData);
+const createSell = catchAsync(async (req: Request, res: Response) => {
+  const { ...sellData } = req.body;
+  const result = await SellServices.createSell(sellData);
 
-  sendResponse<IPurchase>(res, {
+  sendResponse<ISell>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Purchase is created successfully',
+    message: 'Sale is created successfully',
     data: result,
   });
 
   res.send(result);
 });
 
-const getPurchases = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, purchasFilterableFields);
+const getSales = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, saleFilterableFields);
 
   const paginationOptions = pick(req.query, paginationFields);
-  const result = await PurchaseServices.getPurchases(
-    filters,
-    paginationOptions
-  );
+  const result = await SellServices.getSales(filters, paginationOptions);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Purchases fetched successfully',
+    message: 'Sales fetched successfully',
     data: result,
   });
 });
 
-const getSinglePurchase = catchAsync(async (req: Request, res: Response) => {
-  const { purchaseId } = req.params;
-  const result = await PurchaseServices.getSinglePurchase(purchaseId);
+const getSingleSale = catchAsync(async (req: Request, res: Response) => {
+  const { sellId } = req.params;
+  const result = await SellServices.getSingleSell(sellId);
 
-  sendResponse<IPurchase>(res, {
+  sendResponse<ISell>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Purchase fetched successfully',
+    message: 'Sales fetched successfully',
     data: result,
   });
 });
 
-export const PurchaseControllers = {
-  createPurchase,
-  getPurchases,
-  getSinglePurchase,
+export const SaleControllers = {
+  createSell,
+  getSales,
+  getSingleSale,
 };

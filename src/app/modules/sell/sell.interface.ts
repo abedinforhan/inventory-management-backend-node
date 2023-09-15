@@ -1,35 +1,33 @@
 import { Model, Types } from 'mongoose';
 
-export type ISupplier = {
+export type ICustomer = {
   id: Types.ObjectId;
   name: string;
 };
 
-export type IPurchasedProduct = {
+export type ISoldProduct = {
   id: Types.ObjectId;
   name: string;
   brand: string;
   category: string;
   unit: string;
-  perUnitBuyingPrice: number;
   perUnitSellingPrice: number;
-  perUnitMaxPrice: number;
-  buyingQuantity: number;
-  totalBuyingPrice: number;
+  sellingQuantity: number;
+  totalSellingPrice: number;
 };
 
-export type IPurchase = {
+export type ISell = {
   vatTax: number;
   shippingCost: number;
   otherCost: number;
   grandTotal: number;
-  supplier: ISupplier;
-  products: [IPurchasedProduct];
+  customer: ICustomer;
+  products: [ISoldProduct];
 };
 
-export type PurchaseModel = Model<IPurchase, Record<string, unknown>>;
+export type SellModel = Model<ISell, Record<string, unknown>>;
 
-export type IPurchaseFilters = {
+export type ISellFilters = {
   searchTerm?: string;
   _id?: string;
 };

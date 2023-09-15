@@ -1,12 +1,12 @@
 import express from 'express';
-import { PurchaseControllers } from './sell.controller';
+import { SaleControllers } from './sell.controller';
 
 const router = express.Router();
 
-router.post('/create-purchase', PurchaseControllers.createPurchase);
+router.post('/create-sell', SaleControllers.createSell);
 
-router.get('/', PurchaseControllers.getPurchases);
+router.get('/', SaleControllers.getSales);
 
-router.get('/:purchaseId', PurchaseControllers.getSinglePurchase);
+router.get('/:sellId', SaleControllers.getSingleSale);
 
-export const PurchaseRoutes = router;
+export const SellRoutes = router;

@@ -1,3 +1,3 @@
-export const purchasFilterableFields = ['searchTerm', '_id'];
+export const saleFilterableFields = ['searchTerm', '_id'];
 
-export const purchaseSearchableFields = [];
+export const saleSearchableFields = [];

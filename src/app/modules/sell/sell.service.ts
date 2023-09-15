@@ -1,55 +1,19 @@
-import mongoose, { SortOrder } from 'mongoose';
+import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { Product } from '../product/product.model';
-import { purchaseSearchableFields } from './sell.constant';
-import { IPurchase, IPurchaseFilters } from './sell.interface';
-import { Purchase } from './sell.model';
+import { saleSearchableFields } from './sell.constant';
+import { ISell, ISellFilters } from './sell.interface';
+import { Sell } from './sell.model';
 
-const createPurchase = async (
-  payload: IPurchase
-): Promise<IPurchase | null> => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
-  const { products } = payload;
-
-  try {
-    const newPurchase = await Purchase.create([payload], {
-      session,
-    });
-
-    for (const pd of products) {
-      const { id, buyingQuantity, perUnitSellingPrice, perUnitMaxPrice } = pd;
-
-      const existingProduct = await Product.findById(id).session(session);
-
-      if (!existingProduct) {
-        throw new Error(`Product with ID ${id} not found.`);
-      }
-
-      existingProduct.buyingQuantity += buyingQuantity;
-      existingProduct.perUnitMaxPrice = perUnitMaxPrice;
-      existingProduct.perUnitSellingPrice = perUnitSellingPrice;
-
-      await existingProduct.save();
-    }
-
-    await session.commitTransaction();
-    return newPurchase[0];
-  } catch (error) {
-    await session.abortTransaction();
-    throw error;
-  } finally {
-    session.endSession();
-  }
+const createSell = async (payload: ISell): Promise<ISell | null> => {
+  const result = await Sell.create(payload);
+  return result;
 };
-
-const getPurchases = async (
-  filters: IPurchaseFilters,
+const getSales = async (
+  filters: ISellFilters,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IPurchase[]>> => {
+): Promise<IGenericResponse<ISell[]>> => {
   // Extract searchTerm to implement search query
   const { searchTerm, ...filtersData } = filters;
   const { page, limit, skip, sortBy, sortOrder } =
@@ -60,7 +24,7 @@ const getPurchases = async (
   // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
-      $or: purchaseSearchableFields.map(field => ({
+      $or: saleSearchableFields.map(field => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',
@@ -85,12 +49,12 @@ const getPurchases = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Purchase.find(whereConditions)
+  const result = await Sell.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  const total = await Purchase.countDocuments(whereConditions);
+  const total = await Sell.countDocuments(whereConditions);
   const totalPage = Math.ceil(total / limit);
 
   return {
@@ -104,13 +68,13 @@ const getPurchases = async (
   };
 };
 
-const getSinglePurchase = async (id: string): Promise<IPurchase | null> => {
-  const result = await Purchase.findById(id);
+const getSingleSell = async (id: string): Promise<ISell | null> => {
+  const result = await Sell.findById(id);
   return result;
 };
 
-export const PurchaseServices = {
-  createPurchase,
-  getPurchases,
-  getSinglePurchase,
+export const SellServices = {
+  createSell,
+  getSales,
+  getSingleSell,
 };

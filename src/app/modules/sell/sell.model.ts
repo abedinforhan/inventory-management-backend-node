@@ -1,19 +1,14 @@
 import { Schema, model } from 'mongoose';
-import {
-  IPurchase,
-  IPurchasedProduct,
-  ISupplier,
-  PurchaseModel,
-} from './sell.interface';
+import { ICustomer, ISell, ISoldProduct, SellModel } from './sell.interface';
 
-const supplierSchema = new Schema<ISupplier>({
+const CustomerSchema = new Schema<ICustomer>({
   name: {
     type: String,
     required: true,
   },
 });
 
-const purchasedProductSchema = new Schema<IPurchasedProduct>({
+const soldProductSchema = new Schema<ISoldProduct>({
   id: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -34,29 +29,21 @@ const purchasedProductSchema = new Schema<IPurchasedProduct>({
     type: String,
     required: true,
   },
-  perUnitBuyingPrice: {
-    type: Number,
-    required: true,
-  },
   perUnitSellingPrice: {
     type: Number,
     required: true,
   },
-  perUnitMaxPrice: {
+  sellingQuantity: {
     type: Number,
     required: true,
   },
-  buyingQuantity: {
-    type: Number,
-    required: true,
-  },
-  totalBuyingPrice: {
+  totalSellingPrice: {
     type: Number,
     required: true,
   },
 });
 
-const purchaseSchema = new Schema<IPurchase, PurchaseModel>(
+const sellSchema = new Schema<ISell, SellModel>(
   {
     vatTax: {
       type: Number,
@@ -74,8 +61,8 @@ const purchaseSchema = new Schema<IPurchase, PurchaseModel>(
       type: Number,
       required: true,
     },
-    supplier: supplierSchema,
-    products: [purchasedProductSchema],
+    customer: CustomerSchema,
+    products: [soldProductSchema],
   },
   {
     timestamps: true,
@@ -85,7 +72,4 @@ const purchaseSchema = new Schema<IPurchase, PurchaseModel>(
   }
 );
 
-export const Purchase = model<IPurchase, PurchaseModel>(
-  'Purchase',
-  purchaseSchema
-);
+export const Sell = model<ISell, SellModel>('Sell', sellSchema);
