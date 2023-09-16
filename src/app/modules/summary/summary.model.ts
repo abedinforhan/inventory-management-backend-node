@@ -6,6 +6,10 @@ export type ISummary = {
   totalPurchasedProduct: number;
   totalSalesProduct: number;
   profitLoss: number;
+  totalPurchaseInvoices: number;
+  totalSaleInvoices: number;
+  totalCustomer: number;
+  totalSupplier: number;
 };
 
 const summarySchema = new Schema<ISummary>(
@@ -27,6 +31,22 @@ const summarySchema = new Schema<ISummary>(
       default: 0,
     },
     profitLoss: {
+      type: Number,
+      default: 0,
+    },
+    totalPurchaseInvoices: {
+      type: Number,
+      default: 0,
+    },
+    totalSaleInvoices: {
+      type: Number,
+      default: 0,
+    },
+    totalCustomer: {
+      type: Number,
+      default: 0,
+    },
+    totalSupplier: {
       type: Number,
       default: 0,
     },

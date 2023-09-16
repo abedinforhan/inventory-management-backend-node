@@ -38,6 +38,8 @@ const createPurchase = async (
     }
 
     const totalPurchase = grandTotal;
+    const totalPurchaseInvoices = 1;
+
     // Calculate total purchased products quantity
     const totalPurchasedProduct = products.reduce(
       (total, pd) => total + pd.buyingQuantity,
@@ -54,10 +56,13 @@ const createPurchase = async (
         totalPurchasedProduct,
         totalSale: 0, // Initialize totalSale if it's not present
         profitLoss: 0, // Initialize profitLoss if it's not present
+        totalPurchaseInvoices: 0, // Initialize totalPurchaseInvoices
       });
     } else {
       // Calculate profitLoss based on the current totalSale
       summary.profitLoss = summary.totalSale - summary.totalPurchase;
+      // Increment totalPurchaseInvoices
+      summary.totalPurchaseInvoices += totalPurchaseInvoices;
     }
 
     // Update the summary with the new purchase data

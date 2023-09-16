@@ -1,4 +1,4 @@
-import { SortOrder } from 'mongoose';
+import mongoose, { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -33,29 +33,52 @@ import { Sell } from './sell.model';
 //   return result;
 // };
 const createSell = async (payload: ISell): Promise<ISell | null> => {
-  const result = await Sell.create(payload);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  // Calculate the total sale amount and the total number of sold products
-  const totalSaleAmount = payload.products.reduce(
-    (total, product) => total + product.totalSellingPrice,
-    0
-  );
+  try {
+    const result = await Sell.create(payload);
 
-  const totalSalesProduct = payload.products.length;
+    // Calculate the total sale amount and the total number of sold products
+    const totalSaleAmount = payload.products.reduce(
+      (total, product) => total + product.totalSellingPrice,
+      0
+    );
 
-  // Update the Summary model
-  await Summary.findOneAndUpdate(
-    {},
-    {
-      $inc: {
-        totalSale: totalSaleAmount,
-        totalSalesProduct: totalSalesProduct,
+    const totalSalesProduct = payload.products.length;
+
+    // Update the Summary model for sales
+    await Summary.findOneAndUpdate(
+      {},
+      {
+        $inc: {
+          totalSale: totalSaleAmount,
+          totalSalesProduct: totalSalesProduct,
+        },
       },
-    },
-    { upsert: true }
-  );
+      { upsert: true }
+    );
 
-  return result;
+    // Calculate profitLoss based on totalSale and totalPurchase
+    const summary = await Summary.findOne();
+
+    if (!summary) {
+      throw new Error('Summary not found. Cannot calculate profitLoss.');
+    }
+
+    const profitLoss = summary.totalSale - summary.totalPurchase;
+    summary.profitLoss = profitLoss;
+
+    await summary.save();
+
+    await session.commitTransaction();
+    return result;
+  } catch (error) {
+    await session.abortTransaction();
+    throw error;
+  } finally {
+    session.endSession();
+  }
 };
 
 const getSales = async (
