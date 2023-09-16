@@ -2,16 +2,62 @@ import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { SummaryService } from '../summary/summary.services';
+import { Summary } from '../summary/summary.model';
 import { saleSearchableFields } from './sell.constant';
 import { ISell, ISellFilters } from './sell.interface';
 import { Sell } from './sell.model';
 
+// const createSell = async (payload: ISell): Promise<ISell | null> => {
+//   const result = await Sell.create(payload);
+
+//   // Calculate the total sale amount and the total number of sold products
+//   const totalSaleAmount = payload.products.reduce(
+//     (total, product) => total + product.totalSellingPrice,
+//     0
+//   );
+
+//   const totalSalesProduct = payload.products.length;
+
+//   // Update the Summary model
+//   await Summary.findOneAndUpdate(
+//     {},
+//     {
+//       $inc: {
+//         totalSale: totalSaleAmount,
+//         totalSalesProduct: totalSalesProduct,
+//       },
+//     },
+//     { upsert: true }
+//   );
+
+//   return result;
+// };
 const createSell = async (payload: ISell): Promise<ISell | null> => {
   const result = await Sell.create(payload);
-  await SummaryService.calculateSummary();
+
+  // Calculate the total sale amount and the total number of sold products
+  const totalSaleAmount = payload.products.reduce(
+    (total, product) => total + product.totalSellingPrice,
+    0
+  );
+
+  const totalSalesProduct = payload.products.length;
+
+  // Update the Summary model
+  await Summary.findOneAndUpdate(
+    {},
+    {
+      $inc: {
+        totalSale: totalSaleAmount,
+        totalSalesProduct: totalSalesProduct,
+      },
+    },
+    { upsert: true }
+  );
+
   return result;
 };
+
 const getSales = async (
   filters: ISellFilters,
   paginationOptions: IPaginationOptions
