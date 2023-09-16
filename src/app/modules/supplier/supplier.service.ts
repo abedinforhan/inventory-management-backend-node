@@ -4,14 +4,29 @@ import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import { Summary } from '../summary/summary.model';
 import { supplierSearchableFields } from './supplier.constant';
 import { ISupplier, ISupplierFilters } from './supplier.interface';
 import { Supplier } from './supplier.model';
+
+// const createSupplier = async (
+//   payload: ISupplier
+// ): Promise<ISupplier | null> => {
+//   const result = await Supplier.create(payload);
+//   return result;
+// };
 
 const createSupplier = async (
   payload: ISupplier
 ): Promise<ISupplier | null> => {
   const result = await Supplier.create(payload);
+
+  // Update the totalSupplier field in the Summary model
+  await Summary.updateOne(
+    {},
+    { $inc: { totalSupplier: 1 } } // Increment totalSupplier by 1 for each new supplier created
+  );
+
   return result;
 };
 

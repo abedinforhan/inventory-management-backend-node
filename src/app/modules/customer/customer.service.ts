@@ -3,6 +3,7 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 
+import { Summary } from '../summary/summary.model';
 import { customerSearchableFields } from './customer.constant';
 import { ICustomer, ICustomerFilters } from './customer.interface';
 import { Customer } from './customer.model';
@@ -10,10 +11,25 @@ import { Customer } from './customer.model';
 const createCustomer = async (
   payload: ICustomer
 ): Promise<ICustomer | null> => {
+  // Create the customer
   const result = await Customer.create(payload);
+
+  // Update the totalCustomer field in the Summary model
+  try {
+    const summary = await Summary.findOne();
+
+    if (summary) {
+      summary.totalCustomer += 1; // Increment the totalCustomer field
+      await summary.save(); // Save the updated summary document
+    }
+  } catch (error) {
+    // Handle any errors that occur during the update process
+    console.error('Error updating totalCustomer in Summary:', error);
+    throw error;
+  }
+
   return result;
 };
-
 const getCustomers = async (
   filters: ICustomerFilters,
   paginationOptions: IPaginationOptions
