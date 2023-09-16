@@ -31,11 +31,13 @@ const createPurchase = async (
       }
 
       existingProduct.buyingQuantity += buyingQuantity;
+
       existingProduct.perUnitMaxPrice = perUnitMaxPrice;
       existingProduct.perUnitSellingPrice = perUnitSellingPrice;
 
       await existingProduct.save();
     }
+
     const totalPurchase = grandTotal;
     // Calculate totalPurchasedProduct (sum of all product quantities)
     const totalPurchasedProduct = products.reduce(

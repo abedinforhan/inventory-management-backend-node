@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 export type ISummary = {
-  totalPurchase: number;
+  totalPurchaseAmount: number;
   totalSale: number;
   totalPurchasedProduct: number;
   totalSalesProduct: number;
@@ -10,7 +10,7 @@ export type ISummary = {
 
 const summarySchema = new Schema<ISummary>(
   {
-    totalPurchase: {
+    totalPurchaseAmount: {
       type: Number,
       default: 0,
     },

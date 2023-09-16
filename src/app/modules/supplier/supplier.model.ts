@@ -17,6 +17,10 @@ export const SupplierSchema = new Schema<ISupplier, SupplierModel>(
       unique: true,
       required: true,
     },
+    brand: {
+      type: Schema.Types.ObjectId,
+      ref: 'Brand',
+    },
     contactNo: {
       type: String,
       required: true,
@@ -32,10 +36,6 @@ export const SupplierSchema = new Schema<ISupplier, SupplierModel>(
     permanentAddress: {
       type: String,
       required: true,
-    },
-    brand: {
-      type: Schema.Types.ObjectId,
-      ref: 'Brand',
     },
   },
   {

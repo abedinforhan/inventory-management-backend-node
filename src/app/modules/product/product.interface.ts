@@ -6,10 +6,10 @@ import { IUnit } from '../unit/unit.interface';
 export type IProduct = {
   name: string;
   sku: string;
+  description?: string;
   category: Types.ObjectId | ICategory;
   brand: Types.ObjectId | IBrand;
   unit: Types.ObjectId | IUnit;
-  description?: string;
   perUnitSellingPrice: number;
   perUnitMaxPrice: number;
   buyingQuantity: number;

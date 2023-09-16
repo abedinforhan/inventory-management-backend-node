@@ -31,3 +31,11 @@ export type ISellFilters = {
   searchTerm?: string;
   _id?: string;
 };
+
+export type ISummary = {
+  totalPurchased: number;
+  totalSales: number;
+  profitLoss: number;
+  totalPurchasedProducts: number;
+  totalSaleProducts: number;
+};

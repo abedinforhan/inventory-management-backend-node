@@ -5,11 +5,11 @@ export type ISupplier = {
   gender: 'male' | 'female';
   dateOfBirth: string;
   email: string;
+  brand: Types.ObjectId;
   contactNo: string;
   emergencyContactNo: string;
   presentAddress: string;
   permanentAddress: string;
-  brand?: Types.ObjectId;
 };
 
 export type SupplierModel = Model<ISupplier, Record<string, unknown>>;
