@@ -54,6 +54,7 @@ const createSell = async (payload: ISell): Promise<ISell | null> => {
         $inc: {
           totalSale: totalSaleAmount,
           totalSalesProduct: totalSalesProduct,
+          totalSaleInvoices: 1,
         },
       },
       { upsert: true }
