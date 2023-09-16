@@ -5,6 +5,12 @@ export type IUser = {
   id: string;
   role: string;
   password: string;
+  email: string;
+  contactNumber: string;
+  gender: string;
+  emergencyContactNumber: string;
+  presentAddress: string;
+  permanentAddress: string;
   needsPasswordChange: boolean;
   passwordChangedAt?: Date;
 };

@@ -44,19 +44,21 @@ const createPurchase = async (
       (total, pd) => total + pd.buyingQuantity,
       0
     );
+
     // Update or create the summary document
-    const summary = await Summary.findOne().session(session);
+    let summary = await Summary.findOne().session(session);
+
     if (summary) {
       // Update the existing summary
       summary.totalPurchase += totalPurchase;
       summary.totalPurchasedProduct += totalPurchasedProduct;
     } else {
       // Create a new summary if it doesn't exist
-      const newSummary = new Summary({
+      summary = new Summary({
         totalPurchase,
         totalPurchasedProduct,
       });
-      await newSummary.save();
+      await summary.save();
     }
 
     await session.commitTransaction();
