@@ -46,19 +46,43 @@ const createPurchase = async (
 
     // Update or create the summary document
     let summary = await Summary.findOne().session(session);
-
-    if (summary) {
-      // Update the existing summary
-      summary.totalPurchase += totalPurchase;
-      summary.totalPurchasedProduct += totalPurchasedProduct;
-    } else {
+    console.log(summary);
+    if (!summary) {
       // Create a new summary if it doesn't exist
       summary = new Summary({
         totalPurchase,
         totalPurchasedProduct,
+        totalSale: 0, // Initialize totalSale if it's not present
+        profitLoss: 0, // Initialize profitLoss if it's not present
       });
-      await summary.save();
+    } else {
+      // Calculate profitLoss based on the current totalSale
+      summary.profitLoss = summary.totalSale - summary.totalPurchase;
     }
+
+    // Update the summary with the new purchase data
+    summary.totalPurchase += totalPurchase;
+    summary.totalPurchasedProduct += totalPurchasedProduct;
+
+    // Calculate the new profitLoss
+    summary.profitLoss = summary.totalSale - summary.totalPurchase;
+
+    await summary.save();
+    // if (summary) {
+    //   // Update the existing summary
+    //   summary.totalPurchase += totalPurchase;
+    //   summary.totalPurchasedProduct += totalPurchasedProduct;
+    //   summary.profitLoss = summary.totalSale - summary.totalPurchase;
+    // } else {
+    //   // Create a new summary if it doesn't exist
+    //   summary = new Summary({
+    //     totalPurchase,
+    //     totalPurchasedProduct,
+    //     totalSale: 0,
+    //     profitLoss: 0,
+    //   });
+    //   await summary.save();
+    // }
 
     await session.commitTransaction();
     return newPurchase[0];
