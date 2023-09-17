@@ -43,9 +43,8 @@ const productModel = new Schema<IProduct, ProductModel>(
       type: Number,
       default: 0,
     },
-    images: {
-      type: [String],
-      required: true,
+    productImage: {
+      type: String,
       default: '',
     },
   },

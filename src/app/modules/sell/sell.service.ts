@@ -2,78 +2,54 @@ import mongoose, { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import { Product } from '../product/product.model';
 import { Summary } from '../summary/summary.model';
 import { saleSearchableFields } from './sell.constant';
 import { ISell, ISellFilters } from './sell.interface';
 import { Sell } from './sell.model';
 
-// const createSell = async (payload: ISell): Promise<ISell | null> => {
-//   const result = await Sell.create(payload);
-
-//   // Calculate the total sale amount and the total number of sold products
-//   const totalSaleAmount = payload.products.reduce(
-//     (total, product) => total + product.totalSellingPrice,
-//     0
-//   );
-
-//   const totalSalesProduct = payload.products.length;
-
-//   // Update the Summary model
-//   await Summary.findOneAndUpdate(
-//     {},
-//     {
-//       $inc: {
-//         totalSale: totalSaleAmount,
-//         totalSalesProduct: totalSalesProduct,
-//       },
-//     },
-//     { upsert: true }
-//   );
-
-//   return result;
-// };
 const createSell = async (payload: ISell): Promise<ISell | null> => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
+  const { products, grandTotal } = payload;
+  //calculate total purchased products quantity
+  let totalSalesProduct = 0;
+
   try {
-    const result = await Sell.create(payload);
+    const newPurchase = await Sell.create([payload], {
+      session,
+    });
 
-    // Calculate the total sale amount and the total number of sold products
-    const totalSaleAmount = payload.products.reduce(
-      (total, product) => total + product.totalSellingPrice,
-      0
-    );
+    for (const pd of products) {
+      const { id, sellingQuantity } = pd;
 
-    const totalSalesProduct = payload.products.length;
+      const existingProduct = await Product.findById(id).session(session);
 
-    // Update the Summary model for sales
-    await Summary.findOneAndUpdate(
-      {},
-      {
-        $inc: {
-          totalSale: totalSaleAmount,
-          totalSalesProduct: totalSalesProduct,
-          totalSaleInvoices: 1,
-        },
-      },
-      { upsert: true }
-    );
+      if (!existingProduct) {
+        throw new Error(`Product with ID ${id} not found.`);
+      }
 
-    // Calculate profitLoss based on totalSale and totalPurchase
-    const summary = await Summary.findOne();
+      // decrement  to calculate purchased products quantity
+      existingProduct.buyingQuantity -= sellingQuantity;
+      totalSalesProduct += sellingQuantity;
 
-    if (!summary) {
-      throw new Error('Summary not found. Cannot calculate profitLoss.');
+      await existingProduct.save();
     }
 
-    const profitLoss = summary.totalSale - summary.totalPurchase;
-    summary.profitLoss = profitLoss;
+    // Update the Summary model
+    const existingSummary = await Summary.findOne({}).session(session);
 
-    await summary.save();
+    if (existingSummary) {
+      existingSummary.totalSaleAmount += grandTotal;
+      existingSummary.totalSaleInvoices += 1;
+      existingSummary.totalSalesProduct += totalSalesProduct;
+
+      await existingSummary.save();
+    }
 
     await session.commitTransaction();
-    return result;
+    return newPurchase[0];
   } catch (error) {
     await session.abortTransaction();
     throw error;

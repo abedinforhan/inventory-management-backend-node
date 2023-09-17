@@ -15,6 +15,8 @@ const createPurchase = async (
   session.startTransaction();
 
   const { products, grandTotal } = payload;
+  //calculate total purchased products quantity
+  let totalPurchasedProduct = 0;
 
   try {
     const newPurchase = await Purchase.create([payload], {
@@ -30,6 +32,9 @@ const createPurchase = async (
         throw new Error(`Product with ID ${id} not found.`);
       }
 
+      // increment  to calculate purchased products quantity
+      totalPurchasedProduct = totalPurchasedProduct + buyingQuantity;
+
       existingProduct.buyingQuantity += buyingQuantity;
       existingProduct.perUnitMaxPrice = perUnitMaxPrice;
       existingProduct.perUnitSellingPrice = perUnitSellingPrice;
@@ -37,42 +42,16 @@ const createPurchase = async (
       await existingProduct.save();
     }
 
-    const totalPurchase = grandTotal;
-    const totalPurchaseInvoices = 1;
+    // Update the Summary model
+    const existingSummary = await Summary.findOneAndUpdate({}).session(session);
 
-    // Calculate total purchased products quantity
-    const totalPurchasedProduct = products.reduce(
-      (total, pd) => total + pd.buyingQuantity,
-      0
-    );
+    if (existingSummary) {
+      existingSummary.totalPurchaseAmount += grandTotal;
+      existingSummary.totalPurchaseInvoices += 1;
+      existingSummary.totalPurchasedProduct += totalPurchasedProduct;
 
-    // Update or create the summary document
-    let summary = await Summary.findOne().session(session);
-
-    if (!summary) {
-      // Create a new summary if it doesn't exist
-      summary = new Summary({
-        totalPurchase,
-        totalPurchasedProduct,
-        totalSale: 0, // Initialize totalSale if it's not present
-        profitLoss: 0, // Initialize profitLoss if it's not present
-        totalPurchaseInvoices: 0, // Initialize totalPurchaseInvoices
-      });
-    } else {
-      // Calculate profitLoss based on the current totalSale
-      summary.profitLoss = summary.totalSale - summary.totalPurchase;
-      // Increment totalPurchaseInvoices
-      summary.totalPurchaseInvoices += totalPurchaseInvoices;
+      await existingSummary.save();
     }
-
-    // Update the summary with the new purchase data
-    summary.totalPurchase += totalPurchase;
-    summary.totalPurchasedProduct += totalPurchasedProduct;
-
-    // Calculate the new profitLoss
-    summary.profitLoss = summary.totalSale - summary.totalPurchase;
-
-    await summary.save();
 
     await session.commitTransaction();
     return newPurchase[0];

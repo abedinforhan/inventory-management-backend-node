@@ -11,6 +11,11 @@ const UserSchema = new Schema<IUser, UserModel>(
       required: true,
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     role: {
       type: String,
       required: true,
@@ -24,32 +29,26 @@ const UserSchema = new Schema<IUser, UserModel>(
       type: String,
       required: true,
     },
-    contactNumber: {
+    contactNo: {
       type: String,
       required: true,
     },
-    emergencyContactNumber: {
+    emergencyContactNo: {
       type: String,
-      required: false,
-    },
-    presentAddress: {
-      type: String,
-      required: true,
-    },
-    permanentAddress: {
-      type: String,
-      required: true,
     },
     gender: {
       type: String,
       required: true,
     },
-    needsPasswordChange: {
-      type: Boolean,
-      default: true,
+    profileImage: {
+      type: String,
+      default: 'https://i.ibb.co/nP4kJkh/def.jpg',
     },
-    passwordChangedAt: {
-      type: Date,
+    address: {
+      type: String,
+    },
+    designation: {
+      type: String,
     },
   },
   {
@@ -65,7 +64,7 @@ UserSchema.statics.isUserExist = async function (
 ): Promise<IUser | null> {
   return await User.findOne(
     { id },
-    { id: 1, password: 1, role: 1, needsPasswordChange: 1 }
+    { id: 1, password: 1, role: 1, profileImage: 1 }
   );
 };
 
@@ -83,10 +82,6 @@ UserSchema.pre('save', async function (next) {
     user.password,
     Number(config.bycrypt_salt_rounds)
   );
-
-  if (!user.needsPasswordChange) {
-    user.passwordChangedAt = new Date();
-  }
 
   next();
 });

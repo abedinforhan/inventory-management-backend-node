@@ -13,7 +13,7 @@ export type IProduct = {
   perUnitSellingPrice: number;
   perUnitMaxPrice: number;
   buyingQuantity: number;
-  images?: [string];
+  productImage?: string;
 };
 
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

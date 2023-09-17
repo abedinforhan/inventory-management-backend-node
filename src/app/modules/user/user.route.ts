@@ -8,4 +8,13 @@ router.post(
   UserController.createUser
 );
 
+router.get(
+  '/last-user-id',
+  // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  UserController.getLastUserID
+);
+
+router.get('/:id', UserController.getSingleUser);
+router.patch('/:id', UserController.updateSingleUser);
+
 export const UserRoutes = router;

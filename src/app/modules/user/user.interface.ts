@@ -3,22 +3,22 @@ import { Model } from 'mongoose';
 
 export type IUser = {
   id: string;
-  role: string;
   password: string;
-  email: string;
-  contactNumber: string;
+  name: string;
   gender: string;
-  emergencyContactNumber: string;
-  presentAddress: string;
-  permanentAddress: string;
-  needsPasswordChange: boolean;
-  passwordChangedAt?: Date;
+  email: string;
+  address: string;
+  contactNo: string;
+  emergencyContactNo?: string;
+  role: 'admin' | 'manager';
+  designation: string;
+  profileImage?: string;
 };
 
 export type UserModel = {
   isUserExist(
     id: string
-  ): Promise<Pick<IUser, 'id' | 'password' | 'role' | 'needsPasswordChange'>>;
+  ): Promise<Pick<IUser, 'id' | 'password' | 'role' | 'profileImage'>>;
   isPasswordMatched(
     givenPassword: string,
     savedPassword: string

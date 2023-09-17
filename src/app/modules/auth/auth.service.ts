@@ -16,7 +16,6 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const { id, password } = payload;
 
   const isUserExist = await User.isUserExist(id);
-
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
@@ -30,9 +29,10 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
 
   //create access token & refresh token
 
-  const { id: userId, role, needsPasswordChange } = isUserExist;
+  const { id: userId, role, profileImage } = isUserExist;
+
   const accessToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId, role, profileImage },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
@@ -46,7 +46,6 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   return {
     accessToken,
     refreshToken,
-    needsPasswordChange,
   };
 };
 
@@ -86,7 +85,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
 
 const verifyToken = async (token: string): Promise<ITokenResponse> => {
   let verifiedToken = null;
-  console.log(token);
+
   try {
     verifiedToken = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
   } catch (err) {
@@ -139,7 +138,6 @@ const changePassword = async (
   }
 
   isUserExist.password = newPassword;
-  isUserExist.needsPasswordChange = false;
 
   // updating using save()
   isUserExist.save();
