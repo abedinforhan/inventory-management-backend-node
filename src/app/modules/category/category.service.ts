@@ -59,11 +59,15 @@ const getCategories = async (
 
   const total = await Category.countDocuments(whereConditions);
 
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
+
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };

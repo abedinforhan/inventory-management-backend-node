@@ -58,11 +58,15 @@ const getBrands = async (
 
   const total = await Brand.countDocuments(whereConditions);
 
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
+
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };

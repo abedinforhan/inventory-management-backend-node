@@ -4,12 +4,13 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "git pull origin main && ts-node-dev --respawn --transpile-only src/server.ts ",
+    "start": "ts-node-dev --respawn --transpile-only src/server.ts ",
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write .",
     "lint-prettier": "yarn lint:check && yarn prettier:check",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Programming Hero",
@@ -45,6 +46,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.1",
     "multer": "^1.4.5-lts.1",
+    "vercel": "^32.2.4",
     "winston": "^3.9.0",
     "winston-daily-rotate-file": "^4.7.1",
     "zod": "^3.21.4"

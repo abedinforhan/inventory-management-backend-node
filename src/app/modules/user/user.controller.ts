@@ -27,7 +27,7 @@ const getLastUserID: RequestHandler = catchAsync(
     const { role } = req.query;
     const result = await UserService.getLastUserId(role as string);
 
-    sendResponse<IUser>(res, {
+    sendResponse<string>(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Last user ID is fetched successfully!',

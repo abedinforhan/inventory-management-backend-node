@@ -7,13 +7,12 @@ import routes from './app/routes';
 import cookieParser from 'cookie-parser';
 
 const app: Application = express();
-
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
-    credentials: true,
+    origin: "https://*.netlify.app'",
   })
 );
+
 app.use(cookieParser());
 
 //parser

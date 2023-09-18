@@ -57,11 +57,15 @@ const getUnits = async (
 
   const total = await Unit.countDocuments(whereConditions);
 
+  // calculate the page
+  const totalPage = Math.ceil(total / limit);
+
   return {
     meta: {
       page,
       limit,
       total,
+      totalPage,
     },
     data: result,
   };

@@ -42,7 +42,7 @@ const getAllSuppliers = catchAsync(async (req: Request, res: Response) => {
     paginationOptions
   );
 
-  sendResponse<ISupplier[]>(res, {
+  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Suppliers fetched successfully !',

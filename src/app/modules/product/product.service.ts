@@ -2,7 +2,6 @@ import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-
 import { productSearchableFields } from './product.constant';
 import { IProduct, IProductFilters } from './product.interface';
 import { Product } from './product.model';

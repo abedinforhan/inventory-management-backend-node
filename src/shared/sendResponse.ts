@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { string } from 'zod';
 
 type IApiReponse<T> = {
   statusCode: number;
@@ -11,7 +10,7 @@ type IApiReponse<T> = {
     total: number;
     totalPage: number;
   };
-  data?: T | null | string;
+  data?: T | null;
 };
 
 const sendResponse = <T>(res: Response, data: IApiReponse<T>): void => {
@@ -20,7 +19,7 @@ const sendResponse = <T>(res: Response, data: IApiReponse<T>): void => {
     success: data.success,
     message: data.message || null,
     meta: data.meta || null || undefined,
-    data: data.data || null || undefined || string,
+    data: data.data || null || undefined,
   };
 
   res.status(data.statusCode).json(responseData);
