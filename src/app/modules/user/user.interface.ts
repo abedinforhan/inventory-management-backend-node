@@ -13,6 +13,7 @@ export type IUser = {
   role: 'admin' | 'manager';
   designation: string;
   profileImage?: string;
+  status: 'blocked' | 'unblocked';
 };
 
 export type UserModel = {
@@ -24,3 +25,9 @@ export type UserModel = {
     savedPassword: string
   ): Promise<boolean>;
 } & Model<IUser>;
+
+export type IUserFilters = {
+  searchTerm?: string;
+  name?: string;
+  email?: string;
+};

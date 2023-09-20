@@ -23,6 +23,7 @@ export type ISell = {
   grandTotal: number;
   customer: ICustomer;
   products: [ISoldProduct];
+  shippingAddress: string;
 };
 
 export type SellModel = Model<ISell, Record<string, unknown>>;

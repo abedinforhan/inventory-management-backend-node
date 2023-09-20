@@ -35,6 +35,10 @@ const createSell = async (payload: ISell): Promise<ISell | null> => {
       totalSalesProduct += sellingQuantity;
 
       await existingProduct.save();
+      if (existingProduct.buyingQuantity === 0) {
+        existingProduct.status = 'out-stock';
+        await existingProduct.save();
+      }
     }
 
     // Update the Summary model
@@ -121,8 +125,14 @@ const getSingleSell = async (id: string): Promise<ISell | null> => {
   return result;
 };
 
+const updateSales = async (update: Partial<ISell>) => {
+  const result = await Sell.updateMany({}, update);
+  return result;
+};
+
 export const SellServices = {
   createSell,
   getSales,
   getSingleSell,
+  updateSales,
 };

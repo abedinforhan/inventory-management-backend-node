@@ -48,8 +48,22 @@ const getSingleSale = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateSales = catchAsync(async (req: Request, res: Response) => {
+  const { ...update } = req.body;
+  console.log(update);
+
+  const result = await SellServices.updateSales(update);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All sales updated successfully!',
+    data: result,
+  });
+});
 export const SaleControllers = {
   createSell,
   getSales,
   getSingleSale,
+  updateSales,
 };

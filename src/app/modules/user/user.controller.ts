@@ -5,6 +5,9 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { IUser } from './user.interface';
 import { UserService } from './user.service';
+import pick from '../../../shared/pick';
+import { paginationFields } from '../../../constants/pagination';
+import { userFilterableFields } from './user.constant';
 
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -46,6 +49,19 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getUsers = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, userFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+  const result = await UserService.getUsers(filters, paginationOptions);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Users fetched successfully',
+    data: result,
+  });
+});
+
 const updateSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const updateData = req.body;
@@ -60,9 +76,26 @@ const updateSingleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateAllUsers: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { update } = req.body;
+
+    const result = await UserService.updateAllUsers(update);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All users updated successfully!',
+      data: result,
+    });
+  }
+);
+
 export const UserController = {
   createUser,
   getLastUserID,
   getSingleUser,
   updateSingleUser,
+  getUsers,
+  updateAllUsers,
 };

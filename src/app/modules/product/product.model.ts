@@ -47,6 +47,10 @@ const productModel = new Schema<IProduct, ProductModel>(
       type: String,
       default: '',
     },
+    status: {
+      type: String,
+      default: 'out-stock',
+    },
   },
   {
     timestamps: true,

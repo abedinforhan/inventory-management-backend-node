@@ -14,6 +14,7 @@ export type IProduct = {
   perUnitMaxPrice: number;
   buyingQuantity: number;
   productImage?: string;
+  status: 'out-stock' | 'in-stock';
 };
 
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

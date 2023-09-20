@@ -13,7 +13,8 @@ router.get(
   // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   UserController.getLastUserID
 );
-
+router.get('/', UserController.getUsers);
+router.patch('/', UserController.updateAllUsers);
 router.get('/:id', UserController.getSingleUser);
 router.patch('/:id', UserController.updateSingleUser);
 

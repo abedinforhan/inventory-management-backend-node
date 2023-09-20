@@ -50,7 +50,13 @@ const UserSchema = new Schema<IUser, UserModel>(
     designation: {
       type: String,
     },
+    status: {
+      type: String,
+      default: 'unblocked',
+      enum: ['blocked', 'unblocked'],
+    },
   },
+
   {
     timestamps: true,
     toJSON: {

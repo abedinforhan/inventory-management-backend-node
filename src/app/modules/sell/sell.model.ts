@@ -61,6 +61,10 @@ const sellSchema = new Schema<ISell, SellModel>(
       type: Number,
       required: true,
     },
+    shippingAddress: {
+      type: String,
+      required: true,
+    },
     customer: CustomerSchema,
     products: [soldProductSchema],
   },

@@ -39,7 +39,7 @@ const createPurchase = async (
       existingProduct.buyingQuantity += buyingQuantity;
       existingProduct.perUnitMaxPrice = perUnitMaxPrice;
       existingProduct.perUnitSellingPrice = perUnitSellingPrice;
-
+      existingProduct.status = 'in-stock';
       await existingProduct.save();
     }
 
