@@ -50,6 +50,10 @@ const createSell = (payload) => __awaiter(void 0, void 0, void 0, function* () {
             existingProduct.buyingQuantity -= sellingQuantity;
             totalSalesProduct += sellingQuantity;
             yield existingProduct.save();
+            if (existingProduct.buyingQuantity === 0) {
+                existingProduct.status = 'out-stock';
+                yield existingProduct.save();
+            }
         }
         // Update the Summary model
         const existingSummary = yield summary_model_1.Summary.findOne({}).session(session);
@@ -120,8 +124,13 @@ const getSingleSell = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield sell_model_1.Sell.findById(id);
     return result;
 });
+const updateSales = (update) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield sell_model_1.Sell.updateMany({}, update);
+    return result;
+});
 exports.SellServices = {
     createSell,
     getSales,
     getSingleSell,
+    updateSales,
 };

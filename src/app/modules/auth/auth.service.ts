@@ -27,6 +27,13 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect');
   }
 
+  if (isUserExist.status === 'blocked') {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'You are blocked ! Contact with administrator'
+    );
+  }
+
   //create access token & refresh token
 
   const { id: userId, role, profileImage } = isUserExist;

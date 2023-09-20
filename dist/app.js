@@ -11,7 +11,11 @@ const routes_1 = __importDefault(require("./app/routes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: "https://*.netlify.app'",
+    origin: [
+        'https://650b3843752dff2a21bc01dc--university-inventory.netlify.app',
+        'http://localhost:3000',
+    ],
+    credentials: true,
 }));
 app.use((0, cookie_parser_1.default)());
 //parser

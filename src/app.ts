@@ -9,7 +9,10 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'https://650b3843752dff2a21bc01dc--university-inventory.netlify.app',
+      'http://localhost:3000',
+    ],
     credentials: true,
   })
 );

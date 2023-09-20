@@ -37,8 +37,6 @@ const getLastUserId = async (role: string): Promise<string | null> => {
     })
     .lean();
 
-  console.log(lastUser);
-
   return lastUser?.id ? lastUser?.id.substring(1) : '00000';
 };
 
@@ -69,6 +67,7 @@ const getUsers = async (
       })),
     });
   }
+
   // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
@@ -108,9 +107,8 @@ const getUsers = async (
 };
 
 const updateSingleUser = async (id: string, payload: IUser) => {
-  console.log({ payload });
   const result = await User.findByIdAndUpdate(id, payload, { new: true });
-  console.log({ result });
+
   return result;
 };
 

@@ -62,6 +62,11 @@ const UserSchema = new mongoose_1.Schema({
     designation: {
         type: String,
     },
+    status: {
+        type: String,
+        default: 'unblocked',
+        enum: ['blocked', 'unblocked'],
+    },
 }, {
     timestamps: true,
     toJSON: {
@@ -70,7 +75,7 @@ const UserSchema = new mongoose_1.Schema({
 });
 UserSchema.statics.isUserExist = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield exports.User.findOne({ id }, { id: 1, password: 1, role: 1, profileImage: 1 });
+        return yield exports.User.findOne({ id }, { id: 1, password: 1, role: 1, profileImage: 1, status: 1 });
     });
 };
 UserSchema.statics.isPasswordMatched = function (givenPassword, savedPassword) {

@@ -51,6 +51,7 @@ const createPurchase = (payload) => __awaiter(void 0, void 0, void 0, function* 
             existingProduct.buyingQuantity += buyingQuantity;
             existingProduct.perUnitMaxPrice = perUnitMaxPrice;
             existingProduct.perUnitSellingPrice = perUnitSellingPrice;
+            existingProduct.status = 'in-stock';
             yield existingProduct.save();
         }
         // Update the Summary model

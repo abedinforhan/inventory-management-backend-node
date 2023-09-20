@@ -28,6 +28,9 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const user_service_1 = require("./user.service");
+const pick_1 = __importDefault(require("../../../shared/pick"));
+const pagination_1 = require("../../../constants/pagination");
+const user_constant_1 = require("./user.constant");
 const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = __rest(req.body, []);
     console.log(userData);
@@ -58,6 +61,17 @@ const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+const getUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const filters = (0, pick_1.default)(req.query, user_constant_1.userFilterableFields);
+    const paginationOptions = (0, pick_1.default)(req.query, pagination_1.paginationFields);
+    const result = yield user_service_1.UserService.getUsers(filters, paginationOptions);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Users fetched successfully',
+        data: result,
+    });
+}));
 const updateSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const updateData = req.body;
@@ -69,9 +83,21 @@ const updateSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         data: result,
     });
 }));
+const updateAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { update } = req.body;
+    const result = yield user_service_1.UserService.updateAllUsers(update);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'All users updated successfully!',
+        data: result,
+    });
+}));
 exports.UserController = {
     createUser,
     getLastUserID,
     getSingleUser,
     updateSingleUser,
+    getUsers,
+    updateAllUsers,
 };

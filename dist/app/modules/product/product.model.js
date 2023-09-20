@@ -47,6 +47,10 @@ const productModel = new mongoose_1.Schema({
         type: String,
         default: '',
     },
+    status: {
+        type: String,
+        default: 'out-stock',
+    },
 }, {
     timestamps: true,
     toJSON: {

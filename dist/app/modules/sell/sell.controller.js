@@ -63,8 +63,20 @@ const getSingleSale = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+const updateSales = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const update = __rest(req.body, []);
+    console.log(update);
+    const result = yield sell_service_1.SellServices.updateSales(update);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'All sales updated successfully!',
+        data: result,
+    });
+}));
 exports.SaleControllers = {
     createSell,
     getSales,
     getSingleSale,
+    updateSales,
 };

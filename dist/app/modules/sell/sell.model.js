@@ -59,6 +59,10 @@ const sellSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
+    shippingAddress: {
+        type: String,
+        required: true,
+    },
     customer: CustomerSchema,
     products: [soldProductSchema],
 }, {

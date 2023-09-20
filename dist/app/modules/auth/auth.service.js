@@ -28,6 +28,9 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         !(yield user_model_1.User.isPasswordMatched(password, isUserExist.password))) {
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'Password is incorrect');
     }
+    if (isUserExist.status === 'blocked') {
+        throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'You are blocked ! Contact with administrator');
+    }
     //create access token & refresh token
     const { id: userId, role, profileImage } = isUserExist;
     const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userId, role, profileImage }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
